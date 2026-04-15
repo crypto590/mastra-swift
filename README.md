@@ -233,7 +233,7 @@ See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the full checklist.
 
 ## Status
 
-**v0.1.0** — all resource APIs from `@mastra/client-js@1.13.3` are implemented. 239 tests passing. Treat as pre-1.0 until upstream `mastra-ai/mastra` blesses this as the official Swift client; expect minor API tweaks in 0.x. See [`CHANGELOG.md`](./CHANGELOG.md).
+**v0.1.0** — all resource APIs from `@mastra/client-js@1.13.3` are implemented. 239 tests passing. Expect minor API tweaks in 0.x. See [`CHANGELOG.md`](./CHANGELOG.md).
 
 ## License
 
