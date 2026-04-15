@@ -1,35 +1,47 @@
 # mastra-swift
 
-Native Swift SDK for [Mastra](https://mastra.ai). Aims for full feature parity with the official `@mastra/client-js` package, idiomatically adapted for Apple platforms and Linux.
+> Native Swift SDK for [Mastra](https://mastra.ai) — build agents, workflows, memory, RAG, and evals on Apple platforms and Linux.
 
-## Status
+[![Swift 5.10+](https://img.shields.io/badge/swift-5.10%2B-F05138?logo=swift&logoColor=white)](https://swift.org)
+[![Platforms](https://img.shields.io/badge/platforms-iOS%2016%20%7C%20macOS%2013%20%7C%20tvOS%2016%20%7C%20watchOS%209%20%7C%20visionOS%201%20%7C%20Linux-blue)](#platforms)
+[![SPM](https://img.shields.io/badge/SwiftPM-compatible-success)](#install)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](./LICENSE)
+[![Tests](https://img.shields.io/badge/tests-239%20passing-success)](#status)
+[![Parity](https://img.shields.io/badge/parity-%40mastra%2Fclient--js%401.13.3-informational)](./parity-manifest.json)
 
-**0.1.0** — initial release. All resource APIs from `@mastra/client-js@1.13.3` are implemented (239 tests, parity tracked in [`parity-manifest.json`](./parity-manifest.json)). See [`CHANGELOG.md`](./CHANGELOG.md).
+A first-class Swift port of [`@mastra/client-js`](https://www.npmjs.com/package/@mastra/client-js). Every public method in the JS client maps to a Swift equivalent — or to an explicit, documented exception — tracked in a [machine-readable parity manifest](./parity-manifest.json) that CI enforces.
 
-## Pinning
+---
 
-This repository tracks the public API of:
+## Why mastra-swift?
 
-- Upstream repo: `mastra-ai/mastra` at git tag `@mastra/client-js@1.13.3` (commit `b5675bc`)
-- npm: targeting `@mastra/client-js@1.13.4-alpha.2` for shipped behavior
-
-> The `1.13.4-alpha.2` pre-release was published to npm but is not yet git-tagged in `mastra-ai/mastra`. We pin the source baseline to the most recent git tag (`1.13.3`) and reconcile alpha-only deltas in the parity manifest until upstream cuts a tag.
-
-A generated [`parity-manifest.json`](./parity-manifest.json) maps every public JS method to its Swift equivalent (or to an explicit, documented exception). CI fails the build if a JS method has no Swift counterpart and is not allow-listed.
+- **Feature parity, not feature parity *eventually***. All 12 resource families from the upstream client — agents, workflows, memory, vector, responses, conversations, MCP, A2A, observability, scorers, workspaces, datasets — ship in v0.1.
+- **Three streaming formats done right**: agent MDS (`data:` + `[DONE]`), SSE (Responses, A2A), and record-separator JSON (`\x1E`, workflow runs) each get a dedicated decoder returning `AsyncThrowingStream`.
+- **Idiomatic Swift**: `MastraClient` is an `actor`; resources are `Sendable` structs; all errors are `MastraClientError`; cancellation is `Task`-based.
+- **Pluggable auth**: `.bearer { … }`, `.header(name:value:)`, `.custom { … }`, or `.none`. Bring your own token refresh, no retry-on-401 wiring required.
+- **Testable by default**: ships `MastraTestingSupport` with a `MockTransport` for deterministic unit tests — no network required.
+- **Client-side tools**: `generate(..., clientTools: […])` runs the full server ↔ client tool-call loop natively, including JSON-Schema pass-through.
 
 ## Install
 
-Swift Package Manager:
+Add to `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/<org>/mastra-swift.git", from: "0.1.0"),
+.package(url: "https://github.com/crypto590/mastra-swift.git", from: "0.1.0"),
 ```
 
-Add the `Mastra` library as a dependency on your target. For unit tests, also link `MastraTestingSupport` which ships a `FakeTransport`.
+```swift
+.target(
+    name: "YourTarget",
+    dependencies: [
+        .product(name: "Mastra", package: "mastra-swift"),
+    ]
+),
+```
+
+For unit tests, also link `MastraTestingSupport`.
 
 ## Quick start
-
-### Configure the client
 
 ```swift
 import Mastra
@@ -40,22 +52,20 @@ let client = try MastraClient(
 )
 ```
 
-### Stream an agent response
+### Stream an agent
 
 ```swift
 let agent = client.agent(id: "assistant")
-let chunks = try await agent.stream(
-    .init(messages: .array([
+
+for try await chunk in try await agent.stream(.init(
+    messages: .array([
         .object([
             "role": .string("user"),
-            "content": .string("Hello, world!"),
+            "content": .string("Summarize today's standup notes."),
         ])
-    ]))
-)
-
-for try await chunk in chunks {
-    // chunk is JSONValue — inspect ["type"], ["textDelta"], etc.
-    print(chunk)
+    ])
+)) {
+    print(chunk) // JSONValue — inspect ["type"], ["textDelta"], etc.
 }
 ```
 
@@ -64,13 +74,13 @@ for try await chunk in chunks {
 ```swift
 let workflow = client.workflow(id: "onboard")
 let run = try await workflow.createRun()
-let result = try await run.startAsync(
-    .init(inputData: .object(["email": .string("user@example.com")]))
-)
+let result = try await run.startAsync(.init(
+    inputData: .object(["email": .string("user@example.com")])
+))
 print(result.status ?? "no status")
 ```
 
-### Write and read memory
+### Persist memory
 
 ```swift
 let thread = try await client.createMemoryThread(.init(
@@ -80,64 +90,120 @@ let thread = try await client.createMemoryThread(.init(
 ))
 
 _ = try await client.saveMessageToMemory(.init(
-    messages: [
-        .object([
-            "role": .string("user"),
-            "content": .string("Remember: my favorite color is green."),
-        ])
-    ],
+    messages: [.object([
+        "role": .string("user"),
+        "content": .string("Remember: my favorite color is green."),
+    ])],
     agentId: "assistant"
 ))
-
-let messages = try await client.listThreadMessages(
-    threadId: thread.id,
-    agentId: "assistant"
-)
-print(messages)
 ```
 
-## Resources
+### Query a vector index
 
-Every method on `MastraClient` either returns a resource handle or performs a collection-level call. The table below maps each JS resource family to its Swift counterpart.
+```swift
+let vector = client.vector(name: "kb")
+let hits = try await vector.query(.init(
+    indexName: "articles",
+    queryVector: embedding,
+    topK: 5
+))
+```
 
-| JS resource | Swift entry point | Swift type |
+More recipes in the [DocC catalog](./Sources/Mastra/Mastra.docc) and the [CLI playground](./Examples/CLIPlayground).
+
+## Resource coverage
+
+| Resource family | Swift entry point | Notes |
 |---|---|---|
-| `client.getAgent(id)` | `client.agent(id:version:)` | `Agent` |
-| `client.getAgentBuilderAction(id)` | `client.agentBuilderAction(id:)` | `AgentBuilder` |
-| `client.getWorkflow(id)` | `client.workflow(id:)` | `Workflow`, `Run` |
-| `client.getMemoryThread({ threadId })` | `client.memoryThread(threadId:)` | `MemoryThread` |
-| `client.getVector(name)` | `client.vector(name:)` | `Vector` |
-| `client.responses` | `client.responses` | `Responses` |
-| `client.conversations` | `client.conversations` | `Conversations` |
-| `client.getTool(id)` | `client.tool(id:)` | `ToolResource` |
-| `client.getToolProvider(id)` | `client.toolProvider(id:)` | `ToolProvider` |
-| `client.getProcessor(id)` | `client.processor(id:)` | `Processor` |
-| `client.getProcessorProvider(id)` | `client.processorProvider(id:)` | `ProcessorProvider` |
-| `client.getA2A(agentId)` | `client.a2a(agentId:)` | `A2A` |
-| `client.getMcpServerTool(serverId, toolId)` | `client.mcpServerTool(serverId:toolId:)` | `MCPTool` |
-| `client.observability` | `client.observability` | `Observability` |
-| `client.getWorkspace(id)` | `client.workspace(id:)` | `Workspace` |
-| `client.getStoredAgent(id)` | `client.storedAgent(id:)` | `StoredAgent` |
-| `client.getStoredPromptBlock(id)` | `client.storedPromptBlock(id:)` | `StoredPromptBlock` |
-| `client.getStoredScorer(id)` | `client.storedScorer(id:)` | `StoredScorer` |
-| `client.getStoredSkill(id)` | `client.storedSkill(id:)` | `StoredSkill` |
-| `client.getStoredMCPClient(id)` | `client.storedMCPClient(id:)` | `StoredMCPClient` |
-| `client.getDataset(id)` | `client.dataset(_:)` | — |
-| `client.listExperiments()` | `client.listExperiments(_:)` | — |
+| Agents | `client.agent(id:)` | generate, stream (MDS), network, version CRUD, client-side tool loop, model ops |
+| Voice | `agent.voice` | speak, listen, speakers, listener |
+| Agent builder | `client.agentBuilder()` | action runs, streams (RS-JSON) |
+| Workflows | `client.workflow(id:)` | details, runs, schema; `Run` handles all 3 streaming variants |
+| Memory | `client.createMemoryThread(…)` | threads, working memory, search, observational, buffer status |
+| Vector | `client.vector(name:)` | indexes, upsert, query; plus `listVectors` / `listEmbedders` |
+| Responses | `client.responses` | create / stream / retrieve / delete, typed `ResponseEvent` enum |
+| Conversations | `client.conversations` | create / retrieve / delete + `items.list` |
+| Tool / Processor (server) | `client.tool(id:)` / `client.processor(id:)` | details, execute |
+| Tool / Processor providers | `client.toolProvider(id:)` | toolkits, tool schemas |
+| MCP | `client.mcpServer(id:)` / `client.mcpServerTool(…)` | servers, tools, execute |
+| A2A | `client.a2a(agentId:)` | JSON-RPC envelope, SSE `sendStreamingMessage` |
+| Observability | `client.observability` | 29 methods: traces, scores, feedback, metrics, discovery |
+| Scorers & scores | `client.listScorers()` / `client.saveScore(…)` | scores by scorer/run/entity |
+| Logs | `client.listLogs(…)` | filters, transports, per-run logs |
+| Workspaces | `client.workspace(id:)` | info, fs, search, index, skills, skill references |
+| Stored resources | `client.storedAgent(id:)` + 4 more | full version CRUD/activate/restore/compare |
+| Datasets & experiments | `client.dataset(…)` / `client.compareExperiments(…)` | items, batch ops, versions, trigger, review summary |
+| System | `client.systemPackages()` | installed packages |
 
-The full machine-readable mapping is in [`parity-manifest.json`](./parity-manifest.json).
+The complete JS-to-Swift mapping lives in [`parity-manifest.json`](./parity-manifest.json). CI fails if a JS method lacks a Swift mapping and isn't allow-listed as an exception.
+
+## Streaming
+
+Mastra exposes three distinct wire formats. `mastra-swift` ships a decoder for each and returns `AsyncThrowingStream` in every case:
+
+| Decoder | Used by | Wire format |
+|---|---|---|
+| `MastraAgentStreamDecoder` | Agent `stream`, `network` | SSE `data:` lines carrying JSON + `[DONE]` sentinel |
+| `SSEDecoder` | Responses, A2A | Standard Server-Sent Events |
+| `RecordSeparatorJSONDecoder` | Workflow runs (all variants) | RS-delimited (`\x1E`) JSON records |
+
+## Error handling
+
+```swift
+do {
+    _ = try await client.agent(id: "does-not-exist").details()
+} catch let error as MastraClientError {
+    error.status      // HTTP status code
+    error.statusText  // HTTP status text
+    error.body        // Parsed JSONValue? body
+    error.rawBody     // Raw string body
+}
+```
+
+Retries follow the upstream JS semantics exactly: exponential backoff with a 1s cap, no retries on 4xx, configurable via `RetryPolicy`.
+
+## Testing
+
+```swift
+import XCTest
+import Mastra
+import MastraTestingSupport
+
+final class MyServiceTests: XCTestCase {
+    func testItCallsListAgents() async throws {
+        let mock = MockTransport { _ in
+            HTTPResponse(status: 200, statusText: "OK", headers: [:], body: Data("{}".utf8))
+        }
+        let client = try MastraClient(configuration: .init(
+            baseURL: URL(string: "https://example.com")!,
+            transport: mock
+        ))
+        _ = try await client.listAgents()
+        XCTAssertEqual(mock.requests.first?.fullPath, "/api/agents")
+    }
+}
+```
+
+## Platforms
+
+- iOS 16+, macOS 13+, tvOS 16+, watchOS 9+, visionOS 1+
+- Linux (Swift 5.10+; streaming via an optional NIO transport lands in a later release)
+
+## Examples
+
+Two runnable packages under [`Examples/`](./Examples) with their own `Package.swift` files (not pulled in as transitive deps):
+
+- **[`SwiftUIChat`](./Examples/SwiftUIChat)** — SwiftUI chat app using an `@Observable` controller that consumes `agent.stream(...)` into message bubbles.
+- **[`CLIPlayground`](./Examples/CLIPlayground)** — `@main` executable exercising one method per major resource family.
+
+```sh
+cd Examples/CLIPlayground
+MASTRA_BASE_URL=http://localhost:4111 swift run mastra-play list-agents
+```
 
 ## Documentation
 
-Full API reference is published as a DocC catalog in `Sources/Mastra/Mastra.docc/`. Landing page and articles:
-
-- `Mastra.md` — top-level overview and topic index
-- `Configuration.md` — client construction, transport, request context
-- `Authentication.md` — bearer / header / custom auth schemes
-- `Streaming.md` — the three stream wire formats and how to consume them
-- `ResourceOverview.md` — full JS → Swift resource map
-
-Generate docs locally with:
+Generate the DocC catalog locally:
 
 ```sh
 swift package --allow-writing-to-directory ./docs \
@@ -145,44 +211,34 @@ swift package --allow-writing-to-directory ./docs \
     --output-path ./docs
 ```
 
-## Examples
+Articles: `Mastra.md`, `Configuration.md`, `Authentication.md`, `Streaming.md`, `ResourceOverview.md`.
 
-Two runnable example packages live under [`Examples/`](./Examples). Each declares its own `Package.swift` pointing at this repo via a relative path, so they are not pulled in as transitive dependencies of the library.
+## Pinning
 
-- [`Examples/SwiftUIChat`](./Examples/SwiftUIChat) — SwiftUI chat app using an `@Observable` controller that consumes `agent.stream(...)` into message bubbles.
-- [`Examples/CLIPlayground`](./Examples/CLIPlayground) — `@main` executable exercising one method per major resource family (`list-agents`, `run-agent`, `list-workflows`, `start-workflow`, `list-memory-threads`, `vector-query`, `responses-create`, `mcp-servers`, `list-datasets`). Reads `MASTRA_BASE_URL` and `MASTRA_API_KEY` from the environment and prints responses as JSON.
+This release tracks:
 
-```sh
-cd Examples/CLIPlayground
-MASTRA_BASE_URL=http://localhost:4111 swift run mastra-play list-agents
-```
+- Upstream repo: `mastra-ai/mastra` at git tag `@mastra/client-js@1.13.3` (commit [`b5675bc`](https://github.com/mastra-ai/mastra/tree/b5675bcc6b9763925d908e050aa1dcd0cdc3cc00))
+- npm: targeting `@mastra/client-js@1.13.4-alpha.2` for shipped behavior
 
-## Platforms
+> `1.13.4-alpha.2` is an npm-only pre-release and is not yet git-tagged upstream. We pin the source baseline to `1.13.3` and reconcile alpha-only deltas in [`parity-manifest.json`](./parity-manifest.json) until upstream cuts a tag.
 
-- iOS 16+, macOS 13+, tvOS 16+, watchOS 9+, visionOS 1+
-- Linux (Swift 5.10+; streaming requires the optional NIO transport — coming in a later phase)
+## Contributing
 
-## Streaming
+- Every upstream JS method must have a Swift mapping in `parity-manifest.json` or an explicit exception.
+- Resources are `public struct`s; `MastraClient` is the only `actor`. All public types are `Sendable`.
+- Tests must accompany every new resource. Use `MockTransport` from `MastraTestingSupport`.
+- Run `swift build && swift test && node Scripts/check-parity.mjs` before opening a PR.
 
-Mastra exposes three distinct stream wire formats. `mastra-swift` ships a decoder for each:
+See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the full checklist.
 
-| Decoder | Used by | Wire format |
-|---|---|---|
-| `MastraAgentStreamDecoder` | Agent `stream`, `network` | SSE `data:` lines carrying JSON, `[DONE]` sentinel |
-| `SSEDecoder` | Responses, A2A | Standard Server-Sent Events |
-| `RecordSeparatorJSONDecoder` | Workflow runs | RS-delimited (`\x1E`) JSON records |
+## Status
 
-## Error model
-
-```swift
-do { ... }
-catch let error as MastraClientError {
-    error.status      // HTTP status code
-    error.statusText  // HTTP status text
-    error.body        // Parsed JSON body (JSONValue) if available
-}
-```
+**v0.1.0** — all resource APIs from `@mastra/client-js@1.13.3` are implemented. 239 tests passing. Treat as pre-1.0 until upstream `mastra-ai/mastra` blesses this as the official Swift client; expect minor API tweaks in 0.x. See [`CHANGELOG.md`](./CHANGELOG.md).
 
 ## License
 
-Apache-2.0. See [LICENSE](./LICENSE).
+Apache-2.0. See [`LICENSE`](./LICENSE).
+
+## Acknowledgments
+
+Built against the excellent Mastra framework by the [mastra-ai](https://github.com/mastra-ai/mastra) team. This SDK is community-maintained and not officially affiliated with Mastra until the upstream maintainers adopt it.
