@@ -15,11 +15,11 @@ public struct Vector: Sendable {
     // MARK: - Path helpers
 
     private var encodedName: String {
-        vectorName.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? vectorName
+        vectorName.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? vectorName
     }
 
     private func encode(_ s: String) -> String {
-        s.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? s
+        s.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? s
     }
 
     private func requestContextQuery(_ context: RequestContext?) -> [URLQueryItem] {

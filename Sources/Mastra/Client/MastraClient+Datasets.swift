@@ -18,7 +18,7 @@ public extension MastraClient {
 
     /// Mirrors JS `client.getDataset(datasetId)` → `GET /datasets/:id`.
     nonisolated func dataset(_ datasetId: String) async throws -> DatasetRecord {
-        let encoded = datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? datasetId
+        let encoded = datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? datasetId
         return try await base.request("/datasets/\(encoded)")
     }
 
@@ -33,7 +33,7 @@ public extension MastraClient {
     nonisolated func updateDataset(
         _ params: UpdateDatasetParams
     ) async throws -> DatasetRecord {
-        let encoded = params.datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.datasetId
+        let encoded = params.datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.datasetId
         return try await base.request(
             "/datasets/\(encoded)",
             method: .PATCH,
@@ -44,7 +44,7 @@ public extension MastraClient {
     /// Mirrors JS `client.deleteDataset(datasetId)` → `DELETE /datasets/:id`.
     @discardableResult
     nonisolated func deleteDataset(_ datasetId: String) async throws -> DatasetDeleteResponse {
-        let encoded = datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? datasetId
+        let encoded = datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? datasetId
         return try await base.request("/datasets/\(encoded)", method: .DELETE)
     }
 
@@ -61,7 +61,7 @@ public extension MastraClient {
         search: String? = nil,
         version: Int? = nil
     ) async throws -> ListDatasetItemsResponse {
-        let encoded = datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? datasetId
+        let encoded = datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? datasetId
         var query: [URLQueryItem] = []
         if let page { query.append(.init(name: "page", value: String(page))) }
         if let perPage { query.append(.init(name: "perPage", value: String(perPage))) }
@@ -76,8 +76,8 @@ public extension MastraClient {
         datasetId: String,
         itemId: String
     ) async throws -> DatasetItem {
-        let d = datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? datasetId
-        let i = itemId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? itemId
+        let d = datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? datasetId
+        let i = itemId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? itemId
         return try await base.request("/datasets/\(d)/items/\(i)")
     }
 
@@ -86,7 +86,7 @@ public extension MastraClient {
     nonisolated func addDatasetItem(
         _ params: AddDatasetItemParams
     ) async throws -> DatasetItem {
-        let encoded = params.datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.datasetId
+        let encoded = params.datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.datasetId
         return try await base.request(
             "/datasets/\(encoded)/items",
             method: .POST,
@@ -99,8 +99,8 @@ public extension MastraClient {
     nonisolated func updateDatasetItem(
         _ params: UpdateDatasetItemParams
     ) async throws -> DatasetItem {
-        let d = params.datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.datasetId
-        let i = params.itemId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.itemId
+        let d = params.datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.datasetId
+        let i = params.itemId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.itemId
         return try await base.request(
             "/datasets/\(d)/items/\(i)",
             method: .PATCH,
@@ -115,8 +115,8 @@ public extension MastraClient {
         datasetId: String,
         itemId: String
     ) async throws -> DatasetDeleteResponse {
-        let d = datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? datasetId
-        let i = itemId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? itemId
+        let d = datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? datasetId
+        let i = itemId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? itemId
         return try await base.request("/datasets/\(d)/items/\(i)", method: .DELETE)
     }
 
@@ -125,7 +125,7 @@ public extension MastraClient {
     nonisolated func batchInsertDatasetItems(
         _ params: BatchInsertDatasetItemsParams
     ) async throws -> BatchInsertDatasetItemsResponse {
-        let encoded = params.datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.datasetId
+        let encoded = params.datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.datasetId
         return try await base.request(
             "/datasets/\(encoded)/items/batch",
             method: .POST,
@@ -138,7 +138,7 @@ public extension MastraClient {
     nonisolated func batchDeleteDatasetItems(
         _ params: BatchDeleteDatasetItemsParams
     ) async throws -> BatchDeleteDatasetItemsResponse {
-        let encoded = params.datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.datasetId
+        let encoded = params.datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.datasetId
         return try await base.request(
             "/datasets/\(encoded)/items/batch",
             method: .DELETE,
@@ -152,7 +152,7 @@ public extension MastraClient {
     nonisolated func generateDatasetItems(
         _ params: GenerateDatasetItemsParams
     ) async throws -> GenerateDatasetItemsResponse {
-        let encoded = params.datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.datasetId
+        let encoded = params.datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.datasetId
         return try await base.request(
             "/datasets/\(encoded)/generate-items",
             method: .POST,
@@ -182,8 +182,8 @@ public extension MastraClient {
         datasetId: String,
         itemId: String
     ) async throws -> DatasetItemHistoryResponse {
-        let d = datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? datasetId
-        let i = itemId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? itemId
+        let d = datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? datasetId
+        let i = itemId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? itemId
         return try await base.request("/datasets/\(d)/items/\(i)/history")
     }
 
@@ -194,8 +194,8 @@ public extension MastraClient {
         itemId: String,
         datasetVersion: Int
     ) async throws -> DatasetItemVersionResponse {
-        let d = datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? datasetId
-        let i = itemId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? itemId
+        let d = datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? datasetId
+        let i = itemId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? itemId
         return try await base.request("/datasets/\(d)/items/\(i)/versions/\(datasetVersion)")
     }
 
@@ -210,7 +210,7 @@ public extension MastraClient {
         page: Int? = nil,
         perPage: Int? = nil
     ) async throws -> ListDatasetVersionsResponse {
-        let encoded = datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? datasetId
+        let encoded = datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? datasetId
         var query: [URLQueryItem] = []
         if let page { query.append(.init(name: "page", value: String(page))) }
         if let perPage { query.append(.init(name: "perPage", value: String(perPage))) }

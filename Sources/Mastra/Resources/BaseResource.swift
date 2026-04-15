@@ -119,10 +119,10 @@ public struct BaseResource: Sendable {
         let fullPath = normalizedApiPrefix + normalizedPath
         var combinedHeaders = configuration.headers
         for (k, v) in headers { combinedHeaders[k] = v }
-        var combinedQuery = query
-        if let ctx = configuration.requestContext, let encoded = ctx.base64Encoded() {
-            combinedQuery.append(URLQueryItem(name: "requestContext", value: encoded))
-        }
+        let combinedQuery = BaseResource.mergeRequestContext(
+            callQuery: query,
+            configContext: configuration.requestContext
+        )
         var request = HTTPRequest(
             method: method,
             fullPath: fullPath,
@@ -136,5 +136,35 @@ public struct BaseResource: Sendable {
             request = try await interceptor.intercept(request)
         }
         return request
+    }
+
+    /// Merges a per-call `requestContext` query item (if any) with the
+    /// configuration-level `RequestContext` into a single encoded query item.
+    /// Per-call entries win on key collision, matching the JS client's
+    /// precedence. Never produces duplicate `requestContext` keys — different
+    /// server frameworks disagree on first-vs-last-value semantics, so a
+    /// duplicated key can silently shadow tenant/auth scoping.
+    static func mergeRequestContext(
+        callQuery: [URLQueryItem],
+        configContext: RequestContext?
+    ) -> [URLQueryItem] {
+        let callIndex = callQuery.firstIndex(where: { $0.name == "requestContext" })
+        guard configContext != nil || callIndex != nil else { return callQuery }
+
+        let callEntries: [String: JSONValue] = callIndex
+            .flatMap { callQuery[$0].value }
+            .flatMap { Data(base64Encoded: $0) }
+            .flatMap { try? JSONDecoder().decode([String: JSONValue].self, from: $0) }
+            ?? [:]
+
+        var merged = configContext?.entries ?? [:]
+        for (key, value) in callEntries { merged[key] = value }
+
+        var result = callQuery
+        if let idx = callIndex { result.remove(at: idx) }
+        if let encoded = RequestContext(merged).base64Encoded() {
+            result.append(URLQueryItem(name: "requestContext", value: encoded))
+        }
+        return result
     }
 }

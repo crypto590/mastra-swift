@@ -21,6 +21,6 @@ public struct ProcessorProvider: Sendable {
 
     /// Matches JS `encodeURIComponent`; required for `providerId` safety.
     private func encoded(_ value: String) -> String {
-        value.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? value
+        value.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? value
     }
 }

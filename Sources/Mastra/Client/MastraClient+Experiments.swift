@@ -33,7 +33,7 @@ public extension MastraClient {
         page: Int? = nil,
         perPage: Int? = nil
     ) async throws -> ListDatasetExperimentsResponse {
-        let encoded = datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? datasetId
+        let encoded = datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? datasetId
         var query: [URLQueryItem] = []
         if let page { query.append(.init(name: "page", value: String(page))) }
         if let perPage { query.append(.init(name: "perPage", value: String(perPage))) }
@@ -46,8 +46,8 @@ public extension MastraClient {
         datasetId: String,
         experimentId: String
     ) async throws -> DatasetExperiment {
-        let d = datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? datasetId
-        let e = experimentId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? experimentId
+        let d = datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? datasetId
+        let e = experimentId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? experimentId
         return try await base.request("/datasets/\(d)/experiments/\(e)")
     }
 
@@ -59,8 +59,8 @@ public extension MastraClient {
         page: Int? = nil,
         perPage: Int? = nil
     ) async throws -> ListDatasetExperimentResultsResponse {
-        let d = datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? datasetId
-        let e = experimentId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? experimentId
+        let d = datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? datasetId
+        let e = experimentId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? experimentId
         var query: [URLQueryItem] = []
         if let page { query.append(.init(name: "page", value: String(page))) }
         if let perPage { query.append(.init(name: "perPage", value: String(perPage))) }
@@ -80,7 +80,7 @@ public extension MastraClient {
     nonisolated func triggerDatasetExperiment(
         _ params: TriggerDatasetExperimentParams
     ) async throws -> TriggerDatasetExperimentResponse {
-        let encoded = params.datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.datasetId
+        let encoded = params.datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.datasetId
         return try await base.request(
             "/datasets/\(encoded)/experiments",
             method: .POST,
@@ -101,7 +101,7 @@ public extension MastraClient {
     nonisolated func compareExperiments(
         _ params: CompareExperimentsParams
     ) async throws -> CompareExperimentsResponse {
-        let encoded = params.datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.datasetId
+        let encoded = params.datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.datasetId
         return try await base.request(
             "/datasets/\(encoded)/compare",
             method: .POST,
@@ -114,9 +114,9 @@ public extension MastraClient {
     private nonisolated func performUpdateExperimentResult(
         _ params: UpdateExperimentResultParams
     ) async throws -> DatasetExperimentResult {
-        let d = params.datasetId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.datasetId
-        let e = params.experimentId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.experimentId
-        let r = params.resultId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.resultId
+        let d = params.datasetId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.datasetId
+        let e = params.experimentId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.experimentId
+        let r = params.resultId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.resultId
         return try await base.request(
             "/datasets/\(d)/experiments/\(e)/results/\(r)",
             method: .PATCH,

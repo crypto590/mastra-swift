@@ -25,4 +25,27 @@ public enum RoutePath {
         if !n.hasPrefix("/") { n = "/" + n }
         return n
     }
+
+    /// Mirrors JavaScript `encodeURIComponent`. Escapes every character except
+    /// the unreserved set (`A–Z a–z 0–9 - _ . ! ~ * ' ( )`). Critically, `/` IS
+    /// escaped — an ID containing a slash becomes a single encoded segment, not
+    /// multiple path segments. Do not use `.urlPathAllowed` for path segments;
+    /// it leaves `/` and other reserved characters unescaped.
+    public static func encodeURIComponent(_ value: String) -> String {
+        value.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? value
+    }
+}
+
+extension CharacterSet {
+    /// Unreserved set per RFC 3986 plus the extras JS `encodeURIComponent` leaves
+    /// untouched: `! ~ * ' ( )`. Everything else (including `/`, `?`, `#`, `&`,
+    /// `=`, `+`, `,`, `;`, `:`, `@`, `$`) gets percent-encoded.
+    static let jsURIComponent: CharacterSet = {
+        var set = CharacterSet()
+        set.insert(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        set.insert(charactersIn: "abcdefghijklmnopqrstuvwxyz")
+        set.insert(charactersIn: "0123456789")
+        set.insert(charactersIn: "-_.!~*'()")
+        return set
+    }()
 }

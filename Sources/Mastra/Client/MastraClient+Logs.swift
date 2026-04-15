@@ -15,7 +15,7 @@ public extension MastraClient {
     nonisolated func logForRun(
         _ params: GetLogParams
     ) async throws -> GetLogsResponse {
-        let encoded = params.runId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.runId
+        let encoded = params.runId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.runId
         return try await base.request("/logs/\(encoded)", query: params.queryItems)
     }
 

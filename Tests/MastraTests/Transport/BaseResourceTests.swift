@@ -56,6 +56,54 @@ final class BaseResourceTests: XCTestCase {
         }
     }
 
+    func testRequestContextMergesConfigAndCallIntoSingleQueryItem() async throws {
+        let mock = MockTransport()
+        let config = Configuration(
+            baseURL: URL(string: "https://example.com")!,
+            requestContext: RequestContext([
+                "tenant": .string("acme"),
+                "role": .string("viewer"),
+            ]),
+            transport: mock
+        )
+        let base = try BaseResource(config)
+
+        // Per-call context overrides on key collision.
+        let callCtx = RequestContext(["role": .string("admin"), "traceId": .string("t-1")])
+        guard let encoded = callCtx.base64Encoded() else {
+            XCTFail("encode failed"); return
+        }
+        _ = try await base.rawRequest(
+            "/x",
+            query: [URLQueryItem(name: "requestContext", value: encoded)]
+        )
+
+        let req = try XCTUnwrap(mock.requests.first)
+        let ctxItems = req.query.filter { $0.name == "requestContext" }
+        XCTAssertEqual(ctxItems.count, 1, "must not emit duplicate requestContext keys")
+
+        let decoded = try XCTUnwrap(Data(base64Encoded: ctxItems[0].value ?? ""))
+        let merged = try JSONDecoder().decode([String: JSONValue].self, from: decoded)
+        XCTAssertEqual(merged["tenant"]?.stringValue, "acme")
+        XCTAssertEqual(merged["role"]?.stringValue, "admin") // per-call wins
+        XCTAssertEqual(merged["traceId"]?.stringValue, "t-1")
+    }
+
+    func testRequestContextConfigOnlyStillEmitted() async throws {
+        let mock = MockTransport()
+        let config = Configuration(
+            baseURL: URL(string: "https://example.com")!,
+            requestContext: RequestContext(["tenant": .string("acme")]),
+            transport: mock
+        )
+        let base = try BaseResource(config)
+        _ = try await base.rawRequest("/x")
+
+        let req = try XCTUnwrap(mock.requests.first)
+        let ctxItems = req.query.filter { $0.name == "requestContext" }
+        XCTAssertEqual(ctxItems.count, 1)
+    }
+
     func testCustomHeadersMerge() async throws {
         let mock = MockTransport()
         let config = Configuration(

@@ -24,7 +24,7 @@ public struct Workspace: Sendable {
     /// Equivalent of `encodeURIComponent` from JS — percent-encodes everything
     /// except unreserved characters.
     private func encodeComponent(_ s: String) -> String {
-        s.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? s
+        s.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? s
     }
 
     private var basePath: String {
@@ -207,7 +207,7 @@ public struct WorkspaceSkill: Sendable {
     }
 
     private func encodeComponent(_ s: String) -> String {
-        s.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? s
+        s.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? s
     }
 
     /// Mirrors JS private `basePath` on `WorkspaceSkillResource`.

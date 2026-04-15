@@ -14,7 +14,7 @@ public extension MastraClient {
 
     /// Mirrors JS `client.getScorer(scorerId)` → `GET /scores/scorers/:scorerId`.
     nonisolated func scorer(id: String) async throws -> GetScorerResponse {
-        let encoded = id.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? id
+        let encoded = id.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? id
         return try await base.request("/scores/scorers/\(encoded)")
     }
 
@@ -22,7 +22,7 @@ public extension MastraClient {
     nonisolated func listScoresByScorerId(
         _ params: ListScoresByScorerIdParams
     ) async throws -> ListScoresResponse {
-        let encoded = params.scorerId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.scorerId
+        let encoded = params.scorerId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.scorerId
         return try await base.request(
             "/scores/scorer/\(encoded)",
             query: params.queryItems
@@ -33,7 +33,7 @@ public extension MastraClient {
     nonisolated func listScoresByRunId(
         _ params: ListScoresByRunIdParams
     ) async throws -> ListScoresResponse {
-        let encoded = params.runId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.runId
+        let encoded = params.runId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.runId
         return try await base.request(
             "/scores/run/\(encoded)",
             query: params.queryItems
@@ -45,8 +45,8 @@ public extension MastraClient {
     nonisolated func listScoresByEntityId(
         _ params: ListScoresByEntityIdParams
     ) async throws -> ListScoresResponse {
-        let typeEnc = params.entityType.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.entityType
-        let idEnc = params.entityId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.entityId
+        let typeEnc = params.entityType.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.entityType
+        let idEnc = params.entityId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.entityId
         return try await base.request(
             "/scores/entity/\(typeEnc)/\(idEnc)",
             query: params.queryItems

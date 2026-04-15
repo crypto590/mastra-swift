@@ -61,7 +61,7 @@ public struct Conversations: Sendable {
     }
 
     private func percentEncoded(_ segment: String) -> String {
-        segment.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? segment
+        segment.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? segment
     }
 }
 
@@ -87,6 +87,6 @@ public struct ConversationItems: Sendable {
     }
 
     private func percentEncoded(_ segment: String) -> String {
-        segment.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? segment
+        segment.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? segment
     }
 }

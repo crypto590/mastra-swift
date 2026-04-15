@@ -397,7 +397,7 @@ final class WorkspaceTests: XCTestCase {
 
         let req = try XCTUnwrap(mock.requests.first)
         XCTAssertEqual(req.method, .GET)
-        XCTAssertEqual(req.fullPath, "/api/workspaces/ws-1/skills/web-search/references/refs/a.md")
+        XCTAssertEqual(req.fullPath, "/api/workspaces/ws-1/skills/web-search/references/refs%2Fa.md")
     }
 
     // MARK: - top-level listWorkspaces

@@ -89,7 +89,7 @@ public struct Responses: Sendable {
 
     /// Matches JS `encodeURIComponent` for path segments.
     private func percentEncoded(_ segment: String) -> String {
-        segment.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? segment
+        segment.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? segment
     }
 
     /// Decodes the SSE byte stream into typed `ResponseEvent`s, mirroring

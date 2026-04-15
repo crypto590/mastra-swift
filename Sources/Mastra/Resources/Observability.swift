@@ -81,8 +81,8 @@ public struct Observability: Sendable {
                 items.append(.init(name: "dateRange", value: s))
             }
         }
-        let traceEnc = params.traceId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.traceId
-        let spanEnc = params.spanId.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? params.spanId
+        let traceEnc = params.traceId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.traceId
+        let spanEnc = params.spanId.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? params.spanId
         return try await base.request(
             "/observability/traces/\(traceEnc)/\(spanEnc)/scores",
             query: items

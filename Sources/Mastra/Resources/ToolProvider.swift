@@ -42,6 +42,6 @@ public struct ToolProvider: Sendable {
 
     /// Matches JS `encodeURIComponent`; required for `id`/`slug` safety in the path.
     private func encoded(_ value: String) -> String {
-        value.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? value
+        value.addingPercentEncoding(withAllowedCharacters: .jsURIComponent) ?? value
     }
 }
