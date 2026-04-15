@@ -241,4 +241,4 @@ Apache-2.0. See [`LICENSE`](./LICENSE).
 
 ## Acknowledgments
 
-Built against the excellent Mastra framework by the [mastra-ai](https://github.com/mastra-ai/mastra) team. This SDK is community-maintained and not officially affiliated with Mastra until the upstream maintainers adopt it.
+Built against the excellent Mastra framework by the [mastra-ai](https://github.com/mastra-ai/mastra) team. This SDK is community-maintained and not officially affiliated with Mastra.
