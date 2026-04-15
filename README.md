@@ -6,7 +6,7 @@
 [![Platforms](https://img.shields.io/badge/platforms-iOS%2016%20%7C%20macOS%2013%20%7C%20tvOS%2016%20%7C%20watchOS%209%20%7C%20visionOS%201%20%7C%20Linux-blue)](#platforms)
 [![SPM](https://img.shields.io/badge/SwiftPM-compatible-success)](#install)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](./LICENSE)
-[![Tests](https://img.shields.io/badge/tests-239%20passing-success)](#status)
+[![Tests](https://img.shields.io/badge/tests-242%20passing-success)](#status)
 [![Parity](https://img.shields.io/badge/parity-%40mastra%2Fclient--js%401.13.3-informational)](./parity-manifest.json)
 
 A first-class Swift port of [`@mastra/client-js`](https://www.npmjs.com/package/@mastra/client-js). Every public method in the JS client maps to a Swift equivalent — or to an explicit, documented exception — tracked in a [machine-readable parity manifest](./parity-manifest.json) that CI enforces.
@@ -199,6 +199,8 @@ Two runnable packages under [`Examples/`](./Examples) with their own `Package.sw
 ```sh
 cd Examples/CLIPlayground
 MASTRA_BASE_URL=http://localhost:4111 swift run mastra-play list-agents
+MASTRA_BASE_URL=http://localhost:4111 swift run mastra-play list-workflows
+MASTRA_BASE_URL=http://localhost:4111 swift run mastra-play tool-execute get-weather '{"location":"Chicago"}'
 ```
 
 ## Documentation
@@ -233,7 +235,7 @@ See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the full checklist.
 
 ## Status
 
-**v0.1.0** — all resource APIs from `@mastra/client-js@1.13.3` are implemented. 239 tests passing. Expect minor API tweaks in 0.x. See [`CHANGELOG.md`](./CHANGELOG.md).
+**v0.1.0** — all resource APIs from `@mastra/client-js@1.13.3` are implemented. 242 tests passing. The shipped CLI playground has also been smoke-tested against a live Mastra server for agent listing, workflow listing, and direct tool execution. Expect minor API tweaks in 0.x. See [`CHANGELOG.md`](./CHANGELOG.md).
 
 ## License
 
