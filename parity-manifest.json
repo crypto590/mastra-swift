@@ -11,7 +11,7 @@
   "phases": {
     "1": "complete",
     "2": "complete",
-    "3": "pending",
+    "3": "complete",
     "4": "pending",
     "5": "pending",
     "6": "pending"
@@ -48,7 +48,29 @@
         "listProcessors":             { "swift": "listProcessors(requestContext:)", "phase": 2 },
         "getProcessor":               { "swift": "processor(id:)", "phase": 2 },
         "responses":                  { "swift": "responses (var)", "phase": 2 },
-        "conversations":              { "swift": "conversations (var)", "phase": 2 }
+        "conversations":              { "swift": "conversations (var)", "phase": 2 },
+        "getMcpServers":              { "swift": "mcpServers(page:perPage:limit:offset:)", "phase": 3 },
+        "getMcpServerDetails":        { "swift": "mcpServer(id:version:)", "phase": 3 },
+        "getMcpServerTools":          { "swift": "mcpServerTools(serverId:)", "phase": 3 },
+        "getMcpServerTool":           { "swift": "mcpServerTool(serverId:toolId:)", "phase": 3 },
+        "getA2A":                     { "swift": "a2a(agentId:)", "phase": 3 },
+        "observability":              { "swift": "observability (var)", "phase": 3 },
+        "listScorers":                { "swift": "listScorers(requestContext:)", "phase": 3 },
+        "getScorer":                  { "swift": "scorer(id:)", "phase": 3 },
+        "listScoresByScorerId":       { "swift": "listScoresByScorerId(_:)", "phase": 3 },
+        "listScoresByRunId":          { "swift": "listScoresByRunId(_:)", "phase": 3 },
+        "listScoresByEntityId":       { "swift": "listScoresByEntityId(_:)", "phase": 3 },
+        "saveScore":                  { "swift": "saveScore(_:)", "phase": 3 },
+        "listLogs":                   { "swift": "listLogs(_:)", "phase": 3 },
+        "getLogForRun":               { "swift": "logForRun(_:)", "phase": 3 },
+        "listLogTransports":          { "swift": "listLogTransports()", "phase": 3 },
+        "listWorkspaces":             { "swift": "listWorkspaces()", "phase": 3 },
+        "getWorkspace":               { "swift": "workspace(id:)", "phase": 3 },
+        "listToolProviders":          { "swift": "listToolProviders()", "phase": 3 },
+        "getToolProvider":            { "swift": "toolProvider(id:)", "phase": 3 },
+        "getProcessorProviders":      { "swift": "processorProviders()", "phase": 3 },
+        "getProcessorProvider":       { "swift": "processorProvider(id:)", "phase": 3 },
+        "getSystemPackages":          { "swift": "systemPackages()", "phase": 3 }
       }
     },
     "Agent": {
@@ -192,6 +214,98 @@
         "delete":     { "swift": "delete(_:requestContext:)", "phase": 2 },
         "items.list": { "swift": "items.list(_:requestContext:)", "phase": 2 }
       }
+    },
+    "MCPTool": {
+      "swiftType": "MCPTool",
+      "methods": {
+        "details": { "swift": "details(requestContext:)", "phase": 3 },
+        "execute": { "swift": "execute(data:requestContext:)", "phase": 3 }
+      }
+    },
+    "A2A": {
+      "swiftType": "A2A",
+      "methods": {
+        "getCard":              { "swift": "getCard()", "phase": 3 },
+        "sendMessage":          { "swift": "sendMessage(_:)", "phase": 3 },
+        "sendStreamingMessage": { "swift": "sendStreamingMessage(_:)", "phase": 3 },
+        "getTask":              { "swift": "getTask(_:)", "phase": 3 },
+        "cancelTask":           { "swift": "cancelTask(_:)", "phase": 3 }
+      }
+    },
+    "Observability": {
+      "swiftType": "Observability",
+      "methods": {
+        "getTrace":               { "swift": "getTrace(traceId:)", "phase": 3 },
+        "getTraceTrajectory":     { "swift": "getTraceTrajectory(traceId:)", "phase": 3 },
+        "getTraces":              { "swift": "getTraces(_:)", "phase": 3 },
+        "listTraces":             { "swift": "listTraces(_:)", "phase": 3 },
+        "listScoresBySpan":       { "swift": "listScoresBySpan(_:)", "phase": 3 },
+        "score":                  { "swift": "score(_:)", "phase": 3 },
+        "listLogs":               { "swift": "listLogs(_:)", "phase": 3 },
+        "listScores":             { "swift": "listScores(_:)", "phase": 3 },
+        "createScore":            { "swift": "createScore(_:)", "phase": 3 },
+        "getScoreAggregate":      { "swift": "getScoreAggregate(_:)", "phase": 3 },
+        "getScoreBreakdown":      { "swift": "getScoreBreakdown(_:)", "phase": 3 },
+        "getScoreTimeSeries":     { "swift": "getScoreTimeSeries(_:)", "phase": 3 },
+        "getScorePercentiles":    { "swift": "getScorePercentiles(_:)", "phase": 3 },
+        "listFeedback":           { "swift": "listFeedback(_:)", "phase": 3 },
+        "createFeedback":         { "swift": "createFeedback(_:)", "phase": 3 },
+        "getFeedbackAggregate":   { "swift": "getFeedbackAggregate(_:)", "phase": 3 },
+        "getFeedbackBreakdown":   { "swift": "getFeedbackBreakdown(_:)", "phase": 3 },
+        "getFeedbackTimeSeries":  { "swift": "getFeedbackTimeSeries(_:)", "phase": 3 },
+        "getFeedbackPercentiles": { "swift": "getFeedbackPercentiles(_:)", "phase": 3 },
+        "getMetricAggregate":     { "swift": "getMetricAggregate(_:)", "phase": 3 },
+        "getMetricBreakdown":     { "swift": "getMetricBreakdown(_:)", "phase": 3 },
+        "getMetricTimeSeries":    { "swift": "getMetricTimeSeries(_:)", "phase": 3 },
+        "getMetricPercentiles":   { "swift": "getMetricPercentiles(_:)", "phase": 3 },
+        "getMetricNames":         { "swift": "getMetricNames(_:)", "phase": 3 },
+        "getMetricLabelKeys":     { "swift": "getMetricLabelKeys(_:)", "phase": 3 },
+        "getMetricLabelValues":   { "swift": "getMetricLabelValues(_:)", "phase": 3 },
+        "getEntityTypes":         { "swift": "getEntityTypes()", "phase": 3 },
+        "getEntityNames":         { "swift": "getEntityNames(_:)", "phase": 3 },
+        "getServiceNames":        { "swift": "getServiceNames()", "phase": 3 },
+        "getEnvironments":        { "swift": "getEnvironments()", "phase": 3 },
+        "getTags":                { "swift": "getTags(_:)", "phase": 3 }
+      }
+    },
+    "Workspace": {
+      "swiftType": "Workspace",
+      "methods": {
+        "info":          { "swift": "info()", "phase": 3 },
+        "readFile":      { "swift": "readFile(path:encoding:)", "phase": 3 },
+        "writeFile":     { "swift": "writeFile(path:content:options:)", "phase": 3 },
+        "listFiles":     { "swift": "listFiles(path:recursive:)", "phase": 3 },
+        "delete":        { "swift": "delete(path:options:)", "phase": 3 },
+        "mkdir":         { "swift": "mkdir(path:recursive:)", "phase": 3 },
+        "stat":          { "swift": "stat(path:)", "phase": 3 },
+        "search":        { "swift": "search(_:)", "phase": 3 },
+        "index":         { "swift": "index(_:)", "phase": 3 },
+        "listSkills":    { "swift": "listSkills()", "phase": 3 },
+        "searchSkills":  { "swift": "searchSkills(_:)", "phase": 3 },
+        "getSkill":      { "swift": "skill(name:path:)", "phase": 3 }
+      }
+    },
+    "WorkspaceSkill": {
+      "swiftType": "WorkspaceSkill",
+      "methods": {
+        "details":         { "swift": "details()", "phase": 3 },
+        "listReferences":  { "swift": "listReferences()", "phase": 3 },
+        "getReference":    { "swift": "getReference(referencePath:)", "phase": 3 }
+      }
+    },
+    "ToolProvider": {
+      "swiftType": "ToolProvider",
+      "methods": {
+        "listToolkits":   { "swift": "listToolkits()", "phase": 3 },
+        "listTools":      { "swift": "listTools(_:)", "phase": 3 },
+        "getToolSchema":  { "swift": "getToolSchema(toolSlug:)", "phase": 3 }
+      }
+    },
+    "ProcessorProvider": {
+      "swiftType": "ProcessorProvider",
+      "methods": {
+        "details": { "swift": "details()", "phase": 3 }
+      }
     }
   },
   "exceptions": [
@@ -254,6 +368,16 @@
       "jsSymbol": "MastraMessageV1 / MastraDBMessage typed unions",
       "reason": "Deeply nested role-based discriminated unions defined in @mastra/core. Memory message bodies are surfaced as [JSONValue] to avoid drift from the server schema.",
       "swiftEquivalent": "JSONValue (consumers build via dictionary literals)"
+    },
+    {
+      "jsSymbol": "Observability OLAP query argument types (GetScoreAggregateArgs, GetFeedbackBreakdownArgs, GetMetricTimeSeriesArgs, etc.)",
+      "reason": "12 generic OLAP query shapes defined in @mastra/core/storage that change per adapter. Modeled as a single ObservabilityQueryBody/Response wrapping JSONValue, with type aliases per JS name to preserve grep-ability.",
+      "swiftEquivalent": "ObservabilityQueryBody / ObservabilityQueryResponse (JSONValue-backed) + per-method type aliases"
+    },
+    {
+      "jsSymbol": "MastraClient.getTrace / listTraces / listScoresBySpan / score / listLogsVNext / listScores (top-level convenience wrappers)",
+      "reason": "JS exposes pass-through convenience methods on MastraClient that delegate to the Observability resource. Swift uses `client.observability.<method>(...)` instead, matching Phase 1+2 resource access conventions.",
+      "swiftEquivalent": "client.observability.<method>(...)"
     }
   ]
 }
