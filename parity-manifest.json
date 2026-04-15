@@ -10,7 +10,7 @@
   },
   "phases": {
     "1": "complete",
-    "2": "pending",
+    "2": "in-progress",
     "3": "pending",
     "4": "pending",
     "5": "pending",
@@ -20,9 +20,69 @@
     "MastraClient": {
       "swiftType": "MastraClient",
       "methods": {
-        "listAgents": { "swift": "listAgents(requestContext:partial:)", "phase": 2 },
-        "listAgentsModelProviders": { "swift": "listAgentsModelProviders()", "phase": 2 },
-        "getAgent": { "swift": "agent(id:version:)", "phase": 2 }
+        "listAgents":                 { "swift": "listAgents(requestContext:partial:)", "phase": 2 },
+        "listAgentsModelProviders":   { "swift": "listAgentsModelProviders()", "phase": 2 },
+        "getAgent":                   { "swift": "agent(id:version:)", "phase": 2 },
+        "getAgentBuilderActions":     { "swift": "agentBuilderActions()", "phase": 2 },
+        "getAgentBuilderAction":      { "swift": "agentBuilderAction(id:)", "phase": 2 }
+      }
+    },
+    "Agent": {
+      "swiftType": "Agent",
+      "methods": {
+        "details":                    { "swift": "details()", "phase": 2 },
+        "enhanceInstructions":        { "swift": "enhanceInstructions(instructions:comment:)", "phase": 2 },
+        "clone":                      { "swift": "clone(_:)", "phase": 2 },
+        "listVersions":               { "swift": "listVersions(_:)", "phase": 2 },
+        "createVersion":              { "swift": "createVersion(_:)", "phase": 2 },
+        "getVersion":                 { "swift": "getVersion(versionId:)", "phase": 2 },
+        "activateVersion":            { "swift": "activateVersion(versionId:)", "phase": 2 },
+        "restoreVersion":             { "swift": "restoreVersion(versionId:)", "phase": 2 },
+        "deleteVersion":              { "swift": "deleteVersion(versionId:)", "phase": 2 },
+        "compareVersions":            { "swift": "compareVersions(fromId:toId:)", "phase": 2 },
+        "generateLegacy":             { "swift": "generateLegacy(_:)", "phase": 2 },
+        "generate":                   { "swift": "generate(_:)", "phase": 2 },
+        "stream":                     { "swift": "stream(_:)", "phase": 2 },
+        "network":                    { "swift": "network(_:)", "phase": 2 },
+        "approveToolCall":            { "swift": "approveToolCall(_:)", "phase": 2 },
+        "declineToolCall":            { "swift": "declineToolCall(_:)", "phase": 2 },
+        "approveToolCallGenerate":    { "swift": "approveToolCallGenerate(_:)", "phase": 2 },
+        "declineToolCallGenerate":    { "swift": "declineToolCallGenerate(_:)", "phase": 2 },
+        "approveNetworkToolCall":     { "swift": "approveNetworkToolCall(_:)", "phase": 2 },
+        "declineNetworkToolCall":     { "swift": "declineNetworkToolCall(_:)", "phase": 2 },
+        "getTool":                    { "swift": "getTool(toolId:)", "phase": 2 },
+        "executeTool":                { "swift": "executeTool(toolId:data:requestContext:)", "phase": 2 },
+        "updateModel":                { "swift": "updateModel(_:)", "phase": 2 },
+        "resetModel":                 { "swift": "resetModel()", "phase": 2 },
+        "updateModelInModelList":     { "swift": "updateModelInModelList(_:)", "phase": 2 },
+        "reorderModelList":           { "swift": "reorderModelList(_:)", "phase": 2 }
+      }
+    },
+    "AgentVoice": {
+      "swiftType": "AgentVoice",
+      "methods": {
+        "speak":        { "swift": "speak(text:options:)", "phase": 2 },
+        "listen":       { "swift": "listen(audio:mimeType:filename:options:)", "phase": 2 },
+        "getSpeakers":  { "swift": "getSpeakers()", "phase": 2 },
+        "getListener":  { "swift": "getListener()", "phase": 2 }
+      }
+    },
+    "AgentBuilder": {
+      "swiftType": "AgentBuilder",
+      "methods": {
+        "createRun":            { "swift": "createRun(_:)", "phase": 2 },
+        "startAsync":           { "swift": "startAsync(_:)", "phase": 2 },
+        "startActionRun":       { "swift": "startActionRun(_:)", "phase": 2 },
+        "resume":               { "swift": "resume(_:)", "phase": 2 },
+        "resumeAsync":          { "swift": "resumeAsync(_:)", "phase": 2 },
+        "stream":               { "swift": "stream(_:)", "phase": 2 },
+        "observeStream":        { "swift": "observeStream(_:)", "phase": 2 },
+        "observeStreamLegacy":  { "swift": "observeStreamLegacy(_:)", "phase": 2 },
+        "resumeStream":         { "swift": "resumeStream(_:)", "phase": 2 },
+        "runById":              { "swift": "runById(_:)", "phase": 2 },
+        "details":              { "swift": "details()", "phase": 2 },
+        "runs":                 { "swift": "runs(_:)", "phase": 2 },
+        "cancelRun":            { "swift": "cancelRun(_:)", "phase": 2 }
       }
     }
   },
@@ -41,6 +101,31 @@
       "jsSymbol": "ClientOptions.abortSignal",
       "reason": "Per-request cancellation in Swift uses Task cancellation.",
       "swiftEquivalent": "Task.cancel() / withTaskCancellationHandler"
+    },
+    {
+      "jsSymbol": "Agent.streamLegacy",
+      "reason": "JS-only: tees a ReadableStream and attaches a processDataStream method to the Response. Swift callers receive an AsyncThrowingStream<JSONValue, Error> from `Agent.stream(_:)`, which is the idiomatic equivalent.",
+      "swiftEquivalent": "Agent.stream(_:)"
+    },
+    {
+      "jsSymbol": "Agent.processChatResponse / processChatResponse_vNext / processStreamResponseLegacy / processStreamResponse",
+      "reason": "Private JS helpers implementing UI-message stitching and the in-stream tool-calls recursion for streamLegacy. Not public API.",
+      "swiftEquivalent": "n/a (internal)"
+    },
+    {
+      "jsSymbol": "Agent.stream client-side tool recursion",
+      "reason": "JS tees the SSE into two branches (one to caller, one internal) to recurse on tool-calls. Swift Agent.stream yields raw MDS chunks; client-side tool execution during streaming uses approveToolCall/declineToolCall. Phase 2B may add a buffering broadcaster if a concrete consumer needs full parity.",
+      "swiftEquivalent": "Agent.stream(_:) + approveToolCall/declineToolCall (or generate(_:) for full client-tools loop)"
+    },
+    {
+      "jsSymbol": "AgentBuilder.transformWorkflowResult",
+      "reason": "JS helper that normalizes workflow success/failure payloads. Swift returns raw JSONValue and exposes typed ActionResult separately.",
+      "swiftEquivalent": "AgentBuilder.startAsync(_:) returns JSONValue; ActionResult typed wrapper available."
+    },
+    {
+      "jsSymbol": "Zod / Standard Schema compilation in client",
+      "reason": "JS calls zodToJsonSchema / standardSchemaToJSONSchema before POSTing. Swift accepts pre-baked JSON Schema as JSONValue (no Zod analogue).",
+      "swiftEquivalent": "ClientTool.inputSchema / outputSchema and GenerateParams.structuredOutput accept JSONValue JSON-Schema."
     }
   ]
 }
