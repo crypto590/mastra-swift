@@ -10,7 +10,7 @@
   },
   "phases": {
     "1": "complete",
-    "2": "in-progress",
+    "2": "complete",
     "3": "pending",
     "4": "pending",
     "5": "pending",
@@ -24,7 +24,31 @@
         "listAgentsModelProviders":   { "swift": "listAgentsModelProviders()", "phase": 2 },
         "getAgent":                   { "swift": "agent(id:version:)", "phase": 2 },
         "getAgentBuilderActions":     { "swift": "agentBuilderActions()", "phase": 2 },
-        "getAgentBuilderAction":      { "swift": "agentBuilderAction(id:)", "phase": 2 }
+        "getAgentBuilderAction":      { "swift": "agentBuilderAction(id:)", "phase": 2 },
+        "getWorkflow":                { "swift": "workflow(id:)", "phase": 2 },
+        "listWorkflows":              { "swift": "listWorkflows(requestContext:partial:)", "phase": 2 },
+        "listMemoryThreads":          { "swift": "listMemoryThreads(_:)", "phase": 2 },
+        "getMemoryConfig":            { "swift": "memoryConfig(_:)", "phase": 2 },
+        "createMemoryThread":         { "swift": "createMemoryThread(_:)", "phase": 2 },
+        "getMemoryThread":            { "swift": "memoryThread(threadId:agentId:)", "phase": 2 },
+        "listThreadMessages":         { "swift": "listThreadMessages(threadId:agentId:networkId:includeSystemReminders:requestContext:)", "phase": 2 },
+        "deleteThread":               { "swift": "deleteThread(threadId:agentId:networkId:requestContext:)", "phase": 2 },
+        "saveMessageToMemory":        { "swift": "saveMessageToMemory(_:)", "phase": 2 },
+        "getMemoryStatus":            { "swift": "memoryStatus(agentId:resourceId:threadId:requestContext:)", "phase": 2 },
+        "getObservationalMemory":     { "swift": "observationalMemory(_:)", "phase": 2 },
+        "awaitBufferStatus":          { "swift": "awaitBufferStatus(_:)", "phase": 2 },
+        "getWorkingMemory":           { "swift": "workingMemory(_:)", "phase": 2 },
+        "searchMemory":               { "swift": "searchMemory(_:)", "phase": 2 },
+        "updateWorkingMemory":        { "swift": "updateWorkingMemory(_:)", "phase": 2 },
+        "getVector":                  { "swift": "vector(name:)", "phase": 2 },
+        "listVectors":                { "swift": "listVectors()", "phase": 2 },
+        "listEmbedders":              { "swift": "listEmbedders()", "phase": 2 },
+        "listTools":                  { "swift": "listTools(requestContext:)", "phase": 2 },
+        "getTool":                    { "swift": "tool(id:)", "phase": 2 },
+        "listProcessors":             { "swift": "listProcessors(requestContext:)", "phase": 2 },
+        "getProcessor":               { "swift": "processor(id:)", "phase": 2 },
+        "responses":                  { "swift": "responses (var)", "phase": 2 },
+        "conversations":              { "swift": "conversations (var)", "phase": 2 }
       }
     },
     "Agent": {
@@ -84,6 +108,90 @@
         "runs":                 { "swift": "runs(_:)", "phase": 2 },
         "cancelRun":            { "swift": "cancelRun(_:)", "phase": 2 }
       }
+    },
+    "Workflow": {
+      "swiftType": "Workflow",
+      "methods": {
+        "details":         { "swift": "details(requestContext:)", "phase": 2 },
+        "runs":            { "swift": "runs(_:requestContext:)", "phase": 2 },
+        "runById":         { "swift": "runById(_:options:)", "phase": 2 },
+        "deleteRunById":   { "swift": "deleteRunById(_:)", "phase": 2 },
+        "getSchema":       { "swift": "getSchema()", "phase": 2 },
+        "createRun":       { "swift": "createRun(_:)", "phase": 2 }
+      }
+    },
+    "Run": {
+      "swiftType": "Run",
+      "methods": {
+        "cancelRun":          { "swift": "cancelRun() (deprecated)", "phase": 2 },
+        "cancel":             { "swift": "cancel()", "phase": 2 },
+        "start":              { "swift": "start(_:)", "phase": 2 },
+        "startAsync":         { "swift": "startAsync(_:)", "phase": 2 },
+        "stream":             { "swift": "stream(_:)", "phase": 2 },
+        "observeStream":      { "swift": "observeStream()", "phase": 2 },
+        "resume":             { "swift": "resume(_:)", "phase": 2 },
+        "resumeAsync":        { "swift": "resumeAsync(_:)", "phase": 2 },
+        "resumeStream":       { "swift": "resumeStream(_:)", "phase": 2 },
+        "restart":            { "swift": "restart(_:)", "phase": 2 },
+        "restartAsync":       { "swift": "restartAsync(_:)", "phase": 2 },
+        "timeTravel":         { "swift": "timeTravel(_:)", "phase": 2 },
+        "timeTravelAsync":    { "swift": "timeTravelAsync(_:)", "phase": 2 },
+        "timeTravelStream":   { "swift": "timeTravelStream(_:)", "phase": 2 }
+      }
+    },
+    "MemoryThread": {
+      "swiftType": "MemoryThread",
+      "methods": {
+        "get":              { "swift": "get(requestContext:)", "phase": 2 },
+        "update":           { "swift": "update(_:)", "phase": 2 },
+        "delete":           { "swift": "delete(requestContext:)", "phase": 2 },
+        "listMessages":     { "swift": "listMessages(_:)", "phase": 2 },
+        "deleteMessages":   { "swift": "deleteMessages(_:requestContext:)", "phase": 2 },
+        "clone":            { "swift": "clone(_:)", "phase": 2 }
+      }
+    },
+    "Vector": {
+      "swiftType": "Vector",
+      "methods": {
+        "details":      { "swift": "details(indexName:requestContext:)", "phase": 2 },
+        "delete":       { "swift": "delete(indexName:)", "phase": 2 },
+        "getIndexes":   { "swift": "getIndexes(requestContext:)", "phase": 2 },
+        "createIndex":  { "swift": "createIndex(_:)", "phase": 2 },
+        "upsert":       { "swift": "upsert(_:)", "phase": 2 },
+        "query":        { "swift": "query(_:)", "phase": 2 }
+      }
+    },
+    "Tool": {
+      "swiftType": "Tool",
+      "methods": {
+        "details":  { "swift": "details(requestContext:)", "phase": 2 },
+        "execute":  { "swift": "execute(data:runId:requestContext:)", "phase": 2 }
+      }
+    },
+    "Processor": {
+      "swiftType": "Processor",
+      "methods": {
+        "details":  { "swift": "details(requestContext:)", "phase": 2 },
+        "execute":  { "swift": "execute(_:)", "phase": 2 }
+      }
+    },
+    "Responses": {
+      "swiftType": "Responses",
+      "methods": {
+        "create":    { "swift": "create(_:)", "phase": 2 },
+        "stream":    { "swift": "stream(_:)", "phase": 2 },
+        "retrieve":  { "swift": "retrieve(_:requestContext:)", "phase": 2 },
+        "delete":    { "swift": "delete(_:requestContext:)", "phase": 2 }
+      }
+    },
+    "Conversations": {
+      "swiftType": "Conversations",
+      "methods": {
+        "create":     { "swift": "create(_:)", "phase": 2 },
+        "retrieve":   { "swift": "retrieve(_:requestContext:)", "phase": 2 },
+        "delete":     { "swift": "delete(_:requestContext:)", "phase": 2 },
+        "items.list": { "swift": "items.list(_:requestContext:)", "phase": 2 }
+      }
     }
   },
   "exceptions": [
@@ -126,6 +234,26 @@
       "jsSymbol": "Zod / Standard Schema compilation in client",
       "reason": "JS calls zodToJsonSchema / standardSchemaToJSONSchema before POSTing. Swift accepts pre-baked JSON Schema as JSONValue (no Zod analogue).",
       "swiftEquivalent": "ClientTool.inputSchema / outputSchema and GenerateParams.structuredOutput accept JSONValue JSON-Schema."
+    },
+    {
+      "jsSymbol": "Workflow.createRecordStream",
+      "reason": "JS static helper to emit RS-delimited streams for server simulation/tests; not part of the client API.",
+      "swiftEquivalent": "n/a"
+    },
+    {
+      "jsSymbol": "Run.createChunkTransformStream",
+      "reason": "Private JS helper replaced by the project-wide RecordSeparatorJSONDecoder.",
+      "swiftEquivalent": "RecordSeparatorJSONDecoder.records(from:)"
+    },
+    {
+      "jsSymbol": "ResponsesStream.asResponse",
+      "reason": "JS helper that returns the raw underlying Response for the streaming endpoint. Swift callers receive a typed AsyncThrowingStream<ResponseEvent, Error> directly; raw bytes would leak transport internals through the resource.",
+      "swiftEquivalent": "Responses.stream(_:)"
+    },
+    {
+      "jsSymbol": "MastraMessageV1 / MastraDBMessage typed unions",
+      "reason": "Deeply nested role-based discriminated unions defined in @mastra/core. Memory message bodies are surfaced as [JSONValue] to avoid drift from the server schema.",
+      "swiftEquivalent": "JSONValue (consumers build via dictionary literals)"
     }
   ]
 }
