@@ -1,0 +1,46 @@
+{
+  "$schema": "./parity-manifest.schema.json",
+  "upstream": {
+    "repository": "mastra-ai/mastra",
+    "package": "@mastra/client-js",
+    "npmVersion": "1.13.4-alpha.2",
+    "gitTag": "@mastra/client-js@1.13.3",
+    "gitCommit": "b5675bcc6b9763925d908e050aa1dcd0cdc3cc00",
+    "note": "1.13.4-alpha.2 is npm-only; baseline source pinned to 1.13.3."
+  },
+  "phases": {
+    "1": "complete",
+    "2": "pending",
+    "3": "pending",
+    "4": "pending",
+    "5": "pending",
+    "6": "pending"
+  },
+  "resources": {
+    "MastraClient": {
+      "swiftType": "MastraClient",
+      "methods": {
+        "listAgents": { "swift": "listAgents(requestContext:partial:)", "phase": 2 },
+        "listAgentsModelProviders": { "swift": "listAgentsModelProviders()", "phase": 2 },
+        "getAgent": { "swift": "agent(id:version:)", "phase": 2 }
+      }
+    }
+  },
+  "exceptions": [
+    {
+      "jsSymbol": "ClientOptions.credentials",
+      "reason": "Browser-only fetch credentials mode. Native cookie behavior is controlled via URLSessionConfiguration on the transport.",
+      "swiftEquivalent": "Configuration.transport (URLSessionTransport(session:))"
+    },
+    {
+      "jsSymbol": "ClientOptions.fetch",
+      "reason": "Web Fetch API replacement. Swift uses the Transport protocol with URLSessionTransport / AsyncHTTPClientTransport instead.",
+      "swiftEquivalent": "Configuration.transport"
+    },
+    {
+      "jsSymbol": "ClientOptions.abortSignal",
+      "reason": "Per-request cancellation in Swift uses Task cancellation.",
+      "swiftEquivalent": "Task.cancel() / withTaskCancellationHandler"
+    }
+  ]
+}
