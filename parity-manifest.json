@@ -12,7 +12,7 @@
     "1": "complete",
     "2": "complete",
     "3": "complete",
-    "4": "pending",
+    "4": "complete",
     "5": "pending",
     "6": "pending"
   },
@@ -70,7 +70,22 @@
         "getToolProvider":            { "swift": "toolProvider(id:)", "phase": 3 },
         "getProcessorProviders":      { "swift": "processorProviders()", "phase": 3 },
         "getProcessorProvider":       { "swift": "processorProvider(id:)", "phase": 3 },
-        "getSystemPackages":          { "swift": "systemPackages()", "phase": 3 }
+        "getSystemPackages":          { "swift": "systemPackages()", "phase": 3 },
+        "listStoredAgents":           { "swift": "listStoredAgents(_:)", "phase": 4 },
+        "createStoredAgent":          { "swift": "createStoredAgent(_:)", "phase": 4 },
+        "getStoredAgent":             { "swift": "storedAgent(id:)", "phase": 4 },
+        "listStoredPromptBlocks":     { "swift": "listStoredPromptBlocks(_:)", "phase": 4 },
+        "createStoredPromptBlock":    { "swift": "createStoredPromptBlock(_:)", "phase": 4 },
+        "getStoredPromptBlock":       { "swift": "storedPromptBlock(id:)", "phase": 4 },
+        "listStoredScorers":          { "swift": "listStoredScorers(_:)", "phase": 4 },
+        "createStoredScorer":         { "swift": "createStoredScorer(_:)", "phase": 4 },
+        "getStoredScorer":            { "swift": "storedScorer(id:)", "phase": 4 },
+        "listStoredMCPClients":       { "swift": "listStoredMCPClients(_:)", "phase": 4 },
+        "createStoredMCPClient":      { "swift": "createStoredMCPClient(_:)", "phase": 4 },
+        "getStoredMCPClient":         { "swift": "storedMCPClient(id:)", "phase": 4 },
+        "listStoredSkills":           { "swift": "listStoredSkills(_:)", "phase": 4 },
+        "createStoredSkill":          { "swift": "createStoredSkill(_:)", "phase": 4 },
+        "getStoredSkill":             { "swift": "storedSkill(id:)", "phase": 4 }
       }
     },
     "Agent": {
@@ -305,6 +320,67 @@
       "swiftType": "ProcessorProvider",
       "methods": {
         "details": { "swift": "details()", "phase": 3 }
+      }
+    },
+    "StoredAgent": {
+      "swiftType": "StoredAgent",
+      "methods": {
+        "details":          { "swift": "details(status:)", "phase": 4 },
+        "update":           { "swift": "update(_:)", "phase": 4 },
+        "delete":           { "swift": "delete()", "phase": 4 },
+        "listVersions":     { "swift": "listVersions(_:)", "phase": 4 },
+        "createVersion":    { "swift": "createVersion(_:)", "phase": 4 },
+        "getVersion":       { "swift": "getVersion(versionId:)", "phase": 4 },
+        "activateVersion":  { "swift": "activateVersion(versionId:)", "phase": 4 },
+        "restoreVersion":   { "swift": "restoreVersion(versionId:)", "phase": 4 },
+        "deleteVersion":    { "swift": "deleteVersion(versionId:)", "phase": 4 },
+        "compareVersions":  { "swift": "compareVersions(fromId:toId:)", "phase": 4 }
+      }
+    },
+    "StoredPromptBlock": {
+      "swiftType": "StoredPromptBlock",
+      "methods": {
+        "details":          { "swift": "details(status:)", "phase": 4 },
+        "update":           { "swift": "update(_:)", "phase": 4 },
+        "delete":           { "swift": "delete()", "phase": 4 },
+        "listVersions":     { "swift": "listVersions(_:)", "phase": 4 },
+        "createVersion":    { "swift": "createVersion(_:)", "phase": 4 },
+        "getVersion":       { "swift": "getVersion(versionId:)", "phase": 4 },
+        "activateVersion":  { "swift": "activateVersion(versionId:)", "phase": 4 },
+        "restoreVersion":   { "swift": "restoreVersion(versionId:)", "phase": 4 },
+        "deleteVersion":    { "swift": "deleteVersion(versionId:)", "phase": 4 },
+        "compareVersions":  { "swift": "compareVersions(fromId:toId:)", "phase": 4 }
+      }
+    },
+    "StoredScorer": {
+      "swiftType": "StoredScorer",
+      "methods": {
+        "details":          { "swift": "details(status:)", "phase": 4 },
+        "update":           { "swift": "update(_:)", "phase": 4 },
+        "delete":           { "swift": "delete()", "phase": 4 },
+        "listVersions":     { "swift": "listVersions(_:)", "phase": 4 },
+        "createVersion":    { "swift": "createVersion(_:)", "phase": 4 },
+        "getVersion":       { "swift": "getVersion(versionId:)", "phase": 4 },
+        "activateVersion":  { "swift": "activateVersion(versionId:)", "phase": 4 },
+        "restoreVersion":   { "swift": "restoreVersion(versionId:)", "phase": 4 },
+        "deleteVersion":    { "swift": "deleteVersion(versionId:)", "phase": 4 },
+        "compareVersions":  { "swift": "compareVersions(fromId:toId:)", "phase": 4 }
+      }
+    },
+    "StoredMCPClient": {
+      "swiftType": "StoredMCPClient",
+      "methods": {
+        "details": { "swift": "details()", "phase": 4 },
+        "update":  { "swift": "update(_:)", "phase": 4 },
+        "delete":  { "swift": "delete()", "phase": 4 }
+      }
+    },
+    "StoredSkill": {
+      "swiftType": "StoredSkill",
+      "methods": {
+        "details": { "swift": "details()", "phase": 4 },
+        "update":  { "swift": "update(_:)", "phase": 4 },
+        "delete":  { "swift": "delete()", "phase": 4 }
       }
     }
   },
