@@ -10,7 +10,7 @@ let package = Package(
         .executable(name: "mastra-play", targets: ["CLIPlayground"]),
     ],
     dependencies: [
-        .package(path: "../.."),
+        .package(name: "mastra-swift", path: "../.."),
     ],
     targets: [
         .executableTarget(

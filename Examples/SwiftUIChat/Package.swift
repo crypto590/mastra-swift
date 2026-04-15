@@ -14,7 +14,7 @@ let package = Package(
         .executable(name: "SwiftUIChat", targets: ["SwiftUIChat"]),
     ],
     dependencies: [
-        .package(path: "../.."),
+        .package(name: "mastra-swift", path: "../.."),
     ],
     targets: [
         .executableTarget(
