@@ -13,7 +13,7 @@
     "2": "complete",
     "3": "complete",
     "4": "complete",
-    "5": "pending",
+    "5": "complete",
     "6": "pending"
   },
   "resources": {
@@ -85,7 +85,33 @@
         "getStoredMCPClient":         { "swift": "storedMCPClient(id:)", "phase": 4 },
         "listStoredSkills":           { "swift": "listStoredSkills(_:)", "phase": 4 },
         "createStoredSkill":          { "swift": "createStoredSkill(_:)", "phase": 4 },
-        "getStoredSkill":             { "swift": "storedSkill(id:)", "phase": 4 }
+        "getStoredSkill":             { "swift": "storedSkill(id:)", "phase": 4 },
+        "listDatasets":                  { "swift": "listDatasets(page:perPage:)", "phase": 5 },
+        "getDataset":                    { "swift": "dataset(_:)", "phase": 5 },
+        "createDataset":                 { "swift": "createDataset(_:)", "phase": 5 },
+        "updateDataset":                 { "swift": "updateDataset(_:)", "phase": 5 },
+        "deleteDataset":                 { "swift": "deleteDataset(_:)", "phase": 5 },
+        "listDatasetItems":              { "swift": "listDatasetItems(datasetId:page:perPage:search:version:)", "phase": 5 },
+        "getDatasetItem":                { "swift": "datasetItem(datasetId:itemId:)", "phase": 5 },
+        "addDatasetItem":                { "swift": "addDatasetItem(_:)", "phase": 5 },
+        "updateDatasetItem":             { "swift": "updateDatasetItem(_:)", "phase": 5 },
+        "deleteDatasetItem":             { "swift": "deleteDatasetItem(datasetId:itemId:)", "phase": 5 },
+        "batchInsertDatasetItems":       { "swift": "batchInsertDatasetItems(_:)", "phase": 5 },
+        "batchDeleteDatasetItems":       { "swift": "batchDeleteDatasetItems(_:)", "phase": 5 },
+        "generateDatasetItems":          { "swift": "generateDatasetItems(_:)", "phase": 5 },
+        "clusterFailures":               { "swift": "clusterFailures(_:)", "phase": 5 },
+        "getItemHistory":                { "swift": "itemHistory(datasetId:itemId:)", "phase": 5 },
+        "getDatasetItemVersion":         { "swift": "datasetItemVersion(datasetId:itemId:datasetVersion:)", "phase": 5 },
+        "listDatasetVersions":           { "swift": "listDatasetVersions(datasetId:page:perPage:)", "phase": 5 },
+        "listExperiments":               { "swift": "listExperiments(page:perPage:)", "phase": 5 },
+        "getExperimentReviewSummary":    { "swift": "experimentReviewSummary()", "phase": 5 },
+        "listDatasetExperiments":        { "swift": "listDatasetExperiments(datasetId:page:perPage:)", "phase": 5 },
+        "getDatasetExperiment":          { "swift": "datasetExperiment(datasetId:experimentId:)", "phase": 5 },
+        "listDatasetExperimentResults":  { "swift": "listDatasetExperimentResults(datasetId:experimentId:page:perPage:)", "phase": 5 },
+        "updateDatasetExperimentResult": { "swift": "updateDatasetExperimentResult(_:)", "phase": 5 },
+        "triggerDatasetExperiment":      { "swift": "triggerDatasetExperiment(_:)", "phase": 5 },
+        "updateExperimentResult":        { "swift": "updateExperimentResult(_:)", "phase": 5 },
+        "compareExperiments":            { "swift": "compareExperiments(_:)", "phase": 5 }
       }
     },
     "Agent": {
