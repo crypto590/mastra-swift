@@ -39,6 +39,17 @@ enum Commands {
         JSONPrinter.print(Array(workflows.keys).sorted())
     }
 
+    static func toolExecute(
+        client: MastraClient,
+        toolId: String,
+        inputJSON: String
+    ) async throws {
+        let input = try parseJSONOrEmpty(inputJSON)
+        let tool = client.tool(id: toolId)
+        let result = try await tool.execute(data: input)
+        JSONPrinter.print(result)
+    }
+
     static func startWorkflow(
         client: MastraClient,
         workflowId: String,

@@ -40,6 +40,14 @@ struct Main {
             try await Commands.runAgent(client: client, agentId: agentId, prompt: prompt)
         case "list-workflows":
             try await Commands.listWorkflows(client: client)
+        case "tool-execute":
+            guard let toolId = args.first else { throw CLIError.missingArg("tool-id") }
+            let inputJSON = args.dropFirst().joined(separator: " ")
+            try await Commands.toolExecute(
+                client: client,
+                toolId: toolId,
+                inputJSON: inputJSON
+            )
         case "start-workflow":
             guard let workflowId = args.first else { throw CLIError.missingArg("workflow-id") }
             let inputJSON = args.dropFirst().joined(separator: " ")
@@ -109,6 +117,7 @@ struct Main {
           list-agents
           run-agent <agent-id> <prompt...>
           list-workflows
+          tool-execute <tool-id> [<json-input>]
           start-workflow <workflow-id> [<json-input>]
           list-memory-threads [<resource-id>]
           vector-query <vector-name> <index-name> [<dim>]
