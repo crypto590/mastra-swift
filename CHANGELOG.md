@@ -7,7 +7,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [0.1.0] - 2026-04-15
 
 Initial release. Full feature parity with `@mastra/client-js@1.13.3`
-(with `1.13.4-alpha.2` delta reconciliation). 239 tests passing.
+(with `1.13.4-alpha.2` delta reconciliation). 242 tests passing.
 Surface tracked in [`parity-manifest.json`](./parity-manifest.json).
 
 ### Added
@@ -95,7 +95,7 @@ Surface tracked in [`parity-manifest.json`](./parity-manifest.json).
 
 ### Tested
 
-- 239 tests (`swift test`) covering all resource surfaces, the three
+- 242 tests (`swift test`) covering all resource surfaces, the three
   stream decoders, auth / interceptor / retry behaviour, request-context
   encoding, error mapping, and JSON-value round-trips.
 
@@ -106,4 +106,4 @@ Surface tracked in [`parity-manifest.json`](./parity-manifest.json).
   decoder requires a non-default transport (NIO-based transport is
   reserved for a future release).
 
-[0.1.0]: https://github.com/<org>/mastra-swift/releases/tag/0.1.0
+[0.1.0]: https://github.com/crypto590/mastra-swift/releases/tag/0.1.0
