@@ -1,0 +1,15 @@
+# Secrets — copy Secrets.xcconfig.example to Secrets.xcconfig and fill it in.
+Secrets.xcconfig
+
+# Xcode user-specific files
+xcuserdata/
+*.xcuserstate
+DerivedData/
+build/
+*.xcworkspace/xcuserdata/
+
+# SwiftPM
+.swiftpm/
+.build/
+Packages/
+Package.resolved

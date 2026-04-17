@@ -1,0 +1,12 @@
+// Default build settings for the iOSShowcase app. Tracked in git.
+//
+// To supply real values, copy `Secrets.xcconfig.example` to `Secrets.xcconfig`
+// (gitignored) and fill in the keys. The `#include?` at the bottom picks it up
+// automatically if present — the build still succeeds if it is not, and the
+// app will show a friendly "Setup needed" screen at launch.
+
+MASTRA_BASE_URL =
+MASTRA_API_KEY =
+MASTRA_AGENT_ID =
+
+#include? "Secrets.xcconfig"
