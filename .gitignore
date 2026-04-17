@@ -3,6 +3,10 @@
 .swiftpm/
 Packages/
 *.xcodeproj/
+# Track the iOS showcase template's Xcode project so fresh clones have something to open.
+!Examples/iOSShowcase/iOSShowcase.xcodeproj/
+Examples/iOSShowcase/iOSShowcase.xcodeproj/project.xcworkspace/xcuserdata/
+Examples/iOSShowcase/iOSShowcase.xcodeproj/xcuserdata/
 DerivedData/
 xcuserdata/
 *.xcworkspace/xcuserdata/

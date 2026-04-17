@@ -1,0 +1,419 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		24DDDDDDDDDDDDDDDDDDDD01 /* iOSShowcaseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCCCCCCCCCCCCCCCCCCC01 /* iOSShowcaseApp.swift */; };
+		24DDDDDDDDDDDDDDDDDDDD02 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCCCCCCCCCCCCCCCCCCC02 /* AppConfig.swift */; };
+		24DDDDDDDDDDDDDDDDDDDD03 /* MisconfiguredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCCCCCCCCCCCCCCCCCCC03 /* MisconfiguredView.swift */; };
+		24DDDDDDDDDDDDDDDDDDDD05 /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCCCCCCCCCCCCCCCCCCC05 /* ChatController.swift */; };
+		24DDDDDDDDDDDDDDDDDDDD06 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCCCCCCCCCCCCCCCCCCC06 /* ChatView.swift */; };
+		24DDDDDDDDDDDDDDDDDDDD07 /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCCCCCCCCCCCCCCCCCCC07 /* MessageBubble.swift */; };
+		24DDDDDDDDDDDDDDDDDDDD08 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCCCCCCCCCCCCCCCCCCC08 /* ChatMessage.swift */; };
+		24DDDDDDDDDDDDDDDDDDDD09 /* ThreadStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCCCCCCCCCCCCCCCCCCC09 /* ThreadStore.swift */; };
+		24DDDDDDDDDDDDDDDDDDDD0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24CCCCCCCCCCCCCCCCCCCC0A /* Assets.xcassets */; };
+		24DDDDDDDDDDDDDDDDDDDD0B /* PreviewClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCCCCCCCCCCCCCCCCCCC0B /* PreviewClient.swift */; };
+		24DDDDDDDDDDDDDDDDDDDD0C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24CCCCCCCCCCCCCCCCCCCC0C /* Preview Assets.xcassets */; };
+		24DDDDDDDDDDDDDDDDDDDD0D /* Mastra in Frameworks */ = {isa = PBXBuildFile; productRef = 24BBBBBBBBBBBBBBBBBBBB04 /* Mastra */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		24CCCCCCCCCCCCCCCCCCCC01 /* iOSShowcaseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSShowcaseApp.swift; sourceTree = "<group>"; };
+		24CCCCCCCCCCCCCCCCCCCC02 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		24CCCCCCCCCCCCCCCCCCCC03 /* MisconfiguredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MisconfiguredView.swift; sourceTree = "<group>"; };
+		24CCCCCCCCCCCCCCCCCCCC04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		24CCCCCCCCCCCCCCCCCCCC05 /* ChatController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
+		24CCCCCCCCCCCCCCCCCCCC06 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		24CCCCCCCCCCCCCCCCCCCC07 /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
+		24CCCCCCCCCCCCCCCCCCCC08 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		24CCCCCCCCCCCCCCCCCCCC09 /* ThreadStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadStore.swift; sourceTree = "<group>"; };
+		24CCCCCCCCCCCCCCCCCCCC0A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		24CCCCCCCCCCCCCCCCCCCC0B /* PreviewClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewClient.swift; sourceTree = "<group>"; };
+		24CCCCCCCCCCCCCCCCCCCC0C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		24CCCCCCCCCCCCCCCCCCCC0D /* Defaults.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Defaults.xcconfig; sourceTree = "<group>"; };
+		24CCCCCCCCCCCCCCCCCCCC0E /* Secrets.xcconfig.example */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig.example; sourceTree = "<group>"; };
+		24EEEEEEEEEEEEEEEEEEEE01 /* iOSShowcase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSShowcase.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		24AAAAAAAAAAAAAAAAAAAA0B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24DDDDDDDDDDDDDDDDDDDD0D /* Mastra in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		24AAAAAAAAAAAAAAAAAAAA02 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				24AAAAAAAAAAAAAAAAAAAA04 /* iOSShowcase */,
+				24AAAAAAAAAAAAAAAAAAAA10 /* Config */,
+				24AAAAAAAAAAAAAAAAAAAA03 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		24AAAAAAAAAAAAAAAAAAAA03 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				24EEEEEEEEEEEEEEEEEEEE01 /* iOSShowcase.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		24AAAAAAAAAAAAAAAAAAAA04 /* iOSShowcase */ = {
+			isa = PBXGroup;
+			children = (
+				24CCCCCCCCCCCCCCCCCCCC01 /* iOSShowcaseApp.swift */,
+				24CCCCCCCCCCCCCCCCCCCC02 /* AppConfig.swift */,
+				24CCCCCCCCCCCCCCCCCCCC03 /* MisconfiguredView.swift */,
+				24AAAAAAAAAAAAAAAAAAAA05 /* Chat */,
+				24CCCCCCCCCCCCCCCCCCCC0A /* Assets.xcassets */,
+				24AAAAAAAAAAAAAAAAAAAA06 /* Preview Content */,
+				24CCCCCCCCCCCCCCCCCCCC04 /* Info.plist */,
+			);
+			path = iOSShowcase;
+			sourceTree = "<group>";
+		};
+		24AAAAAAAAAAAAAAAAAAAA05 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				24CCCCCCCCCCCCCCCCCCCC05 /* ChatController.swift */,
+				24CCCCCCCCCCCCCCCCCCCC06 /* ChatView.swift */,
+				24CCCCCCCCCCCCCCCCCCCC07 /* MessageBubble.swift */,
+				24CCCCCCCCCCCCCCCCCCCC08 /* ChatMessage.swift */,
+				24CCCCCCCCCCCCCCCCCCCC09 /* ThreadStore.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		24AAAAAAAAAAAAAAAAAAAA06 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				24CCCCCCCCCCCCCCCCCCCC0B /* PreviewClient.swift */,
+				24CCCCCCCCCCCCCCCCCCCC0C /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		24AAAAAAAAAAAAAAAAAAAA10 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				24CCCCCCCCCCCCCCCCCCCC0D /* Defaults.xcconfig */,
+				24CCCCCCCCCCCCCCCCCCCC0E /* Secrets.xcconfig.example */,
+			);
+			name = Config;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		24AAAAAAAAAAAAAAAAAAAA07 /* iOSShowcase */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 24AAAAAAAAAAAAAAAAAAAA0C /* Build configuration list for PBXNativeTarget "iOSShowcase" */;
+			buildPhases = (
+				24AAAAAAAAAAAAAAAAAAAA09 /* Sources */,
+				24AAAAAAAAAAAAAAAAAAAA0B /* Frameworks */,
+				24AAAAAAAAAAAAAAAAAAAA0A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iOSShowcase;
+			packageProductDependencies = (
+				24BBBBBBBBBBBBBBBBBBBB04 /* Mastra */,
+			);
+			productName = iOSShowcase;
+			productReference = 24EEEEEEEEEEEEEEEEEEEE01 /* iOSShowcase.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		24AAAAAAAAAAAAAAAAAAAA01 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 2640;
+				LastUpgradeCheck = 2640;
+				TargetAttributes = {
+					24AAAAAAAAAAAAAAAAAAAA07 = {
+						CreatedOnToolsVersion = 26.4;
+					};
+				};
+			};
+			buildConfigurationList = 24AAAAAAAAAAAAAAAAAAAA0D /* Build configuration list for PBXProject "iOSShowcase" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 24AAAAAAAAAAAAAAAAAAAA02;
+			packageReferences = (
+				24BBBBBBBBBBBBBBBBBBBB03 /* XCLocalSwiftPackageReference "../.." */,
+			);
+			productRefGroup = 24AAAAAAAAAAAAAAAAAAAA03 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				24AAAAAAAAAAAAAAAAAAAA07 /* iOSShowcase */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		24AAAAAAAAAAAAAAAAAAAA0A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24DDDDDDDDDDDDDDDDDDDD0C /* Preview Assets.xcassets in Resources */,
+				24DDDDDDDDDDDDDDDDDDDD0A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		24AAAAAAAAAAAAAAAAAAAA09 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24DDDDDDDDDDDDDDDDDDDD01 /* iOSShowcaseApp.swift in Sources */,
+				24DDDDDDDDDDDDDDDDDDDD02 /* AppConfig.swift in Sources */,
+				24DDDDDDDDDDDDDDDDDDDD03 /* MisconfiguredView.swift in Sources */,
+				24DDDDDDDDDDDDDDDDDDDD05 /* ChatController.swift in Sources */,
+				24DDDDDDDDDDDDDDDDDDDD06 /* ChatView.swift in Sources */,
+				24DDDDDDDDDDDDDDDDDDDD07 /* MessageBubble.swift in Sources */,
+				24DDDDDDDDDDDDDDDDDDDD08 /* ChatMessage.swift in Sources */,
+				24DDDDDDDDDDDDDDDDDDDD09 /* ThreadStore.swift in Sources */,
+				24DDDDDDDDDDDDDDDDDDDD0B /* PreviewClient.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		24AAAAAAAAAAAAAAAAAAAA0E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24CCCCCCCCCCCCCCCCCCCC0D /* Defaults.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"iOSShowcase/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = iOSShowcase/Info.plist;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ai.mastra.iOSShowcase;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		24AAAAAAAAAAAAAAAAAAAA0F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24CCCCCCCCCCCCCCCCCCCC0D /* Defaults.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"iOSShowcase/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = iOSShowcase/Info.plist;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ai.mastra.iOSShowcase;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		24BBBBBBBBBBBBBBBBBBBB01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		24BBBBBBBBBBBBBBBBBBBB02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		24AAAAAAAAAAAAAAAAAAAA0C /* Build configuration list for PBXNativeTarget "iOSShowcase" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				24AAAAAAAAAAAAAAAAAAAA0E /* Debug */,
+				24AAAAAAAAAAAAAAAAAAAA0F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		24AAAAAAAAAAAAAAAAAAAA0D /* Build configuration list for PBXProject "iOSShowcase" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				24BBBBBBBBBBBBBBBBBBBB01 /* Debug */,
+				24BBBBBBBBBBBBBBBBBBBB02 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		24BBBBBBBBBBBBBBBBBBBB03 /* XCLocalSwiftPackageReference "../.." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../..";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		24BBBBBBBBBBBBBBBBBBBB04 /* Mastra */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Mastra;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 24AAAAAAAAAAAAAAAAAAAA01 /* Project object */;
+}

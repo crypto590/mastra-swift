@@ -26,11 +26,10 @@ public struct BaseResource: Sendable {
         as type: T.Type = T.self
     ) async throws -> T {
         let response = try await rawRequest(path, method: method, query: query, headers: headers, body: body)
-        if T.self == JSONValue.self {
-            if response.body.isEmpty { return JSONValue.null as! T }
-            return try JSONDecoder().decode(T.self, from: response.body)
-        }
-        return try JSONDecoder().decode(T.self, from: response.body)
+        let payload = (T.self == JSONValue.self && response.body.isEmpty)
+            ? Data("null".utf8)
+            : response.body
+        return try JSONDecoder().decode(T.self, from: payload)
     }
 
     /// Buffered request returning the raw HTTPResponse.

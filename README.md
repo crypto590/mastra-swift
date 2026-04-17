@@ -191,9 +191,10 @@ final class MyServiceTests: XCTestCase {
 
 ## Examples
 
-Two runnable packages under [`Examples/`](./Examples) with their own `Package.swift` files (not pulled in as transitive deps):
+Three runnable samples under [`Examples/`](./Examples), each with its own build graph (not pulled in as transitive deps):
 
-- **[`SwiftUIChat`](./Examples/SwiftUIChat)** — SwiftUI chat app using an `@Observable` controller that consumes `agent.stream(...)` into message bubbles.
+- **[`iOSShowcase`](./Examples/iOSShowcase)** — iOS 26 chat app template. Xcode project, streaming via `agent.stream(...)`, persistent memory threads via `createMemoryThread` + `listThreadMessages`, SwiftUI Previews. Point it at any Mastra server and run on the Simulator.
+- **[`SwiftUIChat`](./Examples/SwiftUIChat)** — SwiftPM-only SwiftUI chat, minimal. Good as a link-check target and for macOS.
 - **[`CLIPlayground`](./Examples/CLIPlayground)** — `@main` executable exercising one method per major resource family.
 
 ```sh
